@@ -1,4 +1,4 @@
-# Minecraft Blender Renderer Python
+# Minecraft Blender Render Api Python
 
 ### Docs
 
