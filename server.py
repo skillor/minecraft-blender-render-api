@@ -79,7 +79,7 @@ class Server:
             allow_headers=["*"],
         )
 
-        @self.app.post(path='/authorize')
+        @self.app.get(path='/authorize')
         async def status(
                 api_key: str = Header(default=''),
         ):
