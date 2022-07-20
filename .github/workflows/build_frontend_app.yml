@@ -34,7 +34,7 @@ jobs:
     - name: Copy dist to webserver static
       run: |
         rm -rf ./docs/app
-        cp -r ./dist/minecraft-blender-render ./docs/app
+        cp -r ./frontend/dist/minecraft-blender-render ./docs/app
     - name: Commit static
       run: |
         git config --global user.name "Build Runner"
