@@ -8,8 +8,6 @@ RUN $BLENDERPIP install --no-cache-dir --upgrade -r /code/requirements.txt
 
 ENV TMP_DIRECTORY "/tmp/minecraft-blender-render-api"
 
-EXPOSE 3000
-
 EXPOSE $PORT
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "3000", "--proxy-headers"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "$PORT", "--proxy-headers"]
