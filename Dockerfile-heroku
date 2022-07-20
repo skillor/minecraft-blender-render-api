@@ -10,4 +10,4 @@ ENV TMP_DIRECTORY "/tmp/minecraft-blender-render-api"
 
 EXPOSE $PORT
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "$PORT", "--proxy-headers"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", $PORT, "--proxy-headers"]
