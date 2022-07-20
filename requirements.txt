@@ -3,4 +3,4 @@ uvicorn[standard]==0.17.6
 python-multipart==0.0.5
 requests
 minecraft-skin-converter==1.2
-blender-renderer==0.5
+blender-renderer==1.1

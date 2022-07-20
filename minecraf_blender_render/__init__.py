@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Dict
 import json
 
 from minecraft_skin_converter import SkinConverter
@@ -16,6 +16,8 @@ class MinecraftBlenderRender:
                          scene_file_bytes: bytes,
                          replace_skins_steve: str,
                          replace_skins_alex: str,
+                         replace_texture_file_map: Dict[str, bytes],
+                         render_settings: str = None,
                          ) -> bytes:
 
         texture_files_map = {}
@@ -60,8 +62,13 @@ class MinecraftBlenderRender:
                 except NameError:
                     pass
 
+        for texture_name, texture_bytes in replace_texture_file_map.items():
+            texture_files_map[texture_name] = texture_bytes
+
         img_bytes = self.blender_renderer.render(
             scene_file_bytes,
             textures=texture_files_map,
+            render_settings_string=render_settings,
         )
+
         return img_bytes
