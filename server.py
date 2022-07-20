@@ -79,6 +79,13 @@ class Server:
             allow_headers=["*"],
         )
 
+        @self.app.post(path='/authorize')
+        async def status(
+                api_key: str = Header(default=''),
+        ):
+            await self.authorize(api_key)
+            return JSONResponse(content={'msg': 'success'})
+
         @self.app.post(path='/get-image-names')
         async def get_image_names(
                 api_key: str = Header(default=''),
