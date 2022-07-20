@@ -2,5 +2,5 @@ fastapi==0.78.0
 uvicorn[standard]==0.17.6
 python-multipart==0.0.5
 requests
-minecraft-skin-converter==1.1
+minecraft-skin-converter==1.2
 blender-renderer==0.5

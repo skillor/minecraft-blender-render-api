@@ -31,6 +31,7 @@ class MinecraftBlenderRender:
                     skin_bytes = get_skin_bytes(player_name)
                     sc = SkinConverter()
                     sc.load_from_bytes(skin_bytes)
+                    sc.normalize_skin()
                     if sc.is_valid_skin():
                         if not sc.is_steve():
                             sc.alex_to_steve()
@@ -50,6 +51,7 @@ class MinecraftBlenderRender:
                     skin_bytes = get_skin_bytes(player_name)
                     sc = SkinConverter()
                     sc.load_from_bytes(skin_bytes)
+                    sc.normalize_skin()
                     print(player_name, sc.is_valid_skin())
                     if sc.is_valid_skin():
                         if sc.is_steve():
