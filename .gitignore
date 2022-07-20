@@ -1,6 +1,6 @@
 settings.py
 
-telegraf-src/
+/docs/app
 tmp/
 
 .idea/

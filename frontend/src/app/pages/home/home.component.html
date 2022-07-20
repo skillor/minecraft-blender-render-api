@@ -1,0 +1,87 @@
+<div class="hero min-h-screen">
+    <div class="hero-content flex-row lg:flex-row">
+        <div clas="flex flex-col">
+            <h1 class="text-2xl font-bold mb-5">Minecraft Blender Render</h1>
+
+            <form [formGroup]="renderForm" (submit)="renderScene()" class="flex flex-col gap-2">
+
+                <input type="file" formControlName="renderFile" class="hidden" accept=".blend"
+                    (change)="onSceneFileSelected($event)" #sceneFileUpload>
+                <div class="file-upload">
+
+                    <button type="button" class="btn gap-2" (click)="sceneFileUpload.click()">
+                        Select blend file
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+
+                    {{ sceneFileName || "No file selected yet." }}
+                </div>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Alex Skins</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered h-10" placeholder='{"alex.png": "KGS501"}' formControlName="replaceAlexSkins"></textarea>
+                </div>
+
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text">Steve Skins</span>
+                    </label>
+                    <textarea class="textarea textarea-bordered h-10" placeholder='{"steve.png": "_spacee"}' formControlName="replaceSteveSkins"></textarea>
+                </div>
+
+                <button *ngIf="!renderTransferState" type="submit" class="btn btn-primary w-full"
+                    [disabled]="renderForm.invalid">Render</button>
+
+                <div *ngIf="renderTransferState" class="flex flex-row justify-center align-middle">
+                    <div class="radial-progress" [style.--value]="renderTransferState.progress * 100 | number:'1.0-0'">
+                        {{ renderTransferState.progress * 100 | number:'1.0-0' }}%</div>
+                    <div [ngSwitch]="renderTransferState.state">
+                        <span *ngSwitchCase="'UPLOAD_PROGRESS'">Uploading...</span>
+                        <span *ngSwitchCase="'UPLOAD_DONE'">Processing...</span>
+                        <span *ngSwitchCase="'DOWNLOAD_PROGRESS'">Downloading...</span>
+                        <span *ngSwitchDefault>Loading...</span>
+                    </div>
+                </div>
+
+                <div *ngIf="renderErrorMessage" class="alert alert-error shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span>{{renderErrorMessage}}</span>
+                </div>
+
+                <div class="collapse collapse-arrow border border-primary">
+                    <input type="checkbox" class="peer" />
+                    <div class="collapse-title bg-primary text-primary-content">
+                        Render Settings
+                    </div>
+                    <div class="collapse-content !p-0">
+                        <textarea class="textarea bg-base-200 w-full h-full"
+                            formControlName="renderSettings"></textarea>
+                    </div>
+                </div>
+
+            </form>
+
+
+            <div class="mt-5">
+                <a routerLink="/settings" class="btn btn-secondary w-full">Settings</a>
+            </div>
+
+        </div>
+
+        <div *ngIf="renderImageSrc" class="w-25">
+            <img [src]="renderImageSrc">
+            <a [href]="renderImageSrc" class="btn btn-secondary w-full" download="render.png">Download</a>
+        </div>
+
+    </div>
+</div>
