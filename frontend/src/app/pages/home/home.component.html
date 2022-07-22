@@ -7,7 +7,7 @@
 
                 <input type="file" formControlName="renderFile" class="hidden" accept=".blend"
                     (change)="onSceneFileSelected($event)" #sceneFileUpload>
-                <div class="file-upload">
+                <div class="file-upload flex flex-row flex-wrap items-center gap-5">
 
                     <button type="button" class="btn gap-2" (click)="sceneFileUpload.click()">
                         Select blend file
@@ -18,7 +18,7 @@
                         </svg>
                     </button>
 
-                    {{ sceneFileName || "No file selected yet." }}
+                    <div class="whitespace-nowrap">{{ sceneFileName || "No file selected yet." }}</div>
                 </div>
 
                 <div class="form-control">
@@ -35,13 +35,13 @@
                     <textarea class="textarea textarea-bordered h-10" placeholder='{"steve.png": "_spacee"}' formControlName="replaceSteveSkins"></textarea>
                 </div>
 
-                <button *ngIf="!renderTransferState" type="submit" class="btn btn-primary w-full"
+                <button *ngIf="!transferState" type="submit" class="btn btn-primary w-full"
                     [disabled]="renderForm.invalid">Render</button>
 
-                <div *ngIf="renderTransferState" class="flex flex-row justify-center align-middle">
-                    <div class="radial-progress" [style.--value]="renderTransferState.progress * 100 | number:'1.0-0'">
-                        {{ renderTransferState.progress * 100 | number:'1.0-0' }}%</div>
-                    <div [ngSwitch]="renderTransferState.state">
+                <div *ngIf="transferState" class="flex flex-row justify-center items-center">
+                    <div class="radial-progress" [style.--value]="transferState.progress * 100 | number:'1.0-0'">
+                        {{ transferState.progress * 100 | number:'1.0-0' }}%</div>
+                    <div [ngSwitch]="transferState.state">
                         <span *ngSwitchCase="'UPLOAD_PROGRESS'">Uploading...</span>
                         <span *ngSwitchCase="'UPLOAD_DONE'">Processing...</span>
                         <span *ngSwitchCase="'DOWNLOAD_PROGRESS'">Downloading...</span>
@@ -49,13 +49,13 @@
                     </div>
                 </div>
 
-                <div *ngIf="renderErrorMessage" class="alert alert-error shadow-lg">
+                <div *ngIf="errorMessage" class="alert alert-error shadow-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                             d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
                             clip-rule="evenodd" />
                     </svg>
-                    <span>{{renderErrorMessage}}</span>
+                    <span>{{errorMessage}}</span>
                 </div>
 
                 <div class="collapse collapse-arrow border border-primary">
@@ -70,6 +70,19 @@
                 </div>
 
             </form>
+
+            <div class="mt-2 collapse collapse-arrow border border-accent">
+                <input type="checkbox" class="peer" />
+                <div class="collapse-title bg-accent text-accent-content">
+                    Advanced
+                </div>
+                <div class="collapse-content !p-0">
+                    <button type="button" class="btn btn-secondary w-full" (click)="loadRenderSettings()" [disabled]="renderForm.invalid">Load Render Settings from blend file</button>
+                    <div *ngIf="loadedRenderSettings" class="mockup-code">
+                        <pre><code>{{loadedRenderSettings | json}}</code></pre>
+                    </div>
+                </div>
+            </div>
 
 
             <div class="mt-5">

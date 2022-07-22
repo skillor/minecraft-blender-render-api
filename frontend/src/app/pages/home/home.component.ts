@@ -17,10 +17,11 @@ export class HomeComponent implements OnInit {
 
     renderForm: FormGroup;
 
-    renderTransferState?: Transfer;
+    transferState?: Transfer;
 
-    renderImageSrc?: SafeUrl;
-    renderErrorMessage: string = '';
+    renderImageSrc?: SafeUrl = undefined;
+    loadedRenderSettings?: any = undefined;
+    errorMessage: string = '';
 
     constructor(
         private minecraftBlenderRenderService: MinecraftBlenderRenderService,
@@ -70,7 +71,7 @@ export class HomeComponent implements OnInit {
     }
 
     renderScene() {
-        this.renderErrorMessage = '';
+        this.errorMessage = '';
         this.minecraftBlenderRenderService.renderSkinAuto(
             this.renderForm.get('renderFileSource')!.value,
             this.renderForm.get('replaceAlexSkins')!.value,
@@ -78,16 +79,35 @@ export class HomeComponent implements OnInit {
             this.renderForm.get('renderSettings')!.value,
         ).subscribe(
             (transfer) => {
-                this.renderTransferState = transfer;
+                this.transferState = transfer;
                 if (transfer.state == 'DONE') {
-                    this.renderTransferState = undefined;
+                    this.transferState = undefined;
                     this.renderImageSrc = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(transfer.event?.body));
                 }
             },
             (error) => {
-                this.renderErrorMessage = 'Something went wrong!';
-                this.renderTransferState = undefined;
+                this.errorMessage = 'Something went wrong!';
+                this.transferState = undefined;
                 this.renderImageSrc = undefined;
+            },
+            () => {},
+        );
+    }
+
+    loadRenderSettings() {
+        this.minecraftBlenderRenderService.getRenderSettings(
+            this.renderForm.get('renderFileSource')!.value,
+        ).subscribe(
+            (transfer) => {
+                this.transferState = transfer;
+                if (transfer.state == 'DONE') {
+                    this.transferState = undefined;
+                    this.loadedRenderSettings = transfer.event?.body;
+                }
+            },
+            (error) => {
+                this.errorMessage = 'Something went wrong!';
+                this.transferState = undefined;
             },
             () => {},
         );

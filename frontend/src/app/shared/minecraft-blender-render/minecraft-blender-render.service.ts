@@ -41,4 +41,17 @@ export class MinecraftBlenderRenderService {
             scan(calculateState, initialState),
         );
     }
+
+    getRenderSettings(
+        sceneFile: File,
+    ): Observable<Transfer> {
+        const formData = new FormData();
+        formData.append('scene_file', sceneFile);
+        return this.http.post(this.getUrl('/get-render-settings'), formData, {
+            reportProgress: true,
+            observe: 'events',
+        }).pipe(
+            scan(calculateState, initialState),
+        );
+    }
 }

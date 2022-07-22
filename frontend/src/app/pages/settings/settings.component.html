@@ -1,5 +1,5 @@
-<div class="flex justify-center py-5">
-    <div class="settings-panel w-full">
+<div class="flex min-h-screen justify-center items-center py-5">
+    <div class="w-full max-w-xl">
         <div *ngFor="let setting of getSettings()" class="my-2">
             <ng-container *ngIf="!setting.condition || settings[setting.condition].value" [ngSwitch]="setting.type">
                 <ng-container *ngSwitchCase="'checkbox'">
@@ -37,10 +37,10 @@
             </ng-container>
         </div>
         <div class="mt-4 grid gap-3 grid-cols-2">
-            <button type="button" class="btn btn-error" (click)="importSettings()">Import Settings</button>
+            <button type="button" class="btn btn-accent" (click)="importSettings()">Import Settings</button>
             <button type="button" class="btn btn-secondary" (click)="exportSettings()">Export Settings</button>
             <a routerLink="/home" class="btn btn-secondary">Cancel</a>
-            <button type="button" class="btn btn-success" (click)="saveSettings()">Save</button>
+            <button type="button" class="btn btn-primary" (click)="saveSettings()">Save</button>
         </div>
     </div>
 </div>
