@@ -2,13 +2,15 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SettingsService } from '../settings/settings.service';
-import { Observable, scan } from 'rxjs';
+import { Observable, scan, map } from 'rxjs';
 import { calculateState, initialState, Transfer } from './transfer';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MinecraftBlenderRenderService {
+
+    private _isValidEndpoint = false;
 
     constructor(
         private http: HttpClient,
@@ -20,6 +22,19 @@ export class MinecraftBlenderRenderService {
             Location.joinWithSlash(this.settingsService.getSetting('minecraft_blender_render_api_url').value, endpoint)
         );
         return url.toString();
+    }
+
+    isValidEndpoint(): boolean {
+        return this._isValidEndpoint;
+    }
+
+    checkEndpoint(): Observable<void> {
+        return this.http.get(this.getUrl('/authorize')).pipe(
+            map(() => {
+                this._isValidEndpoint = true;
+                return;
+            })
+        );
     }
 
     renderSkinAuto(

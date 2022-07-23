@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClipboardModule } from 'ngx-clipboard';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { SetupComponent } from './setup/setup.component';
 
@@ -22,6 +23,7 @@ import { SetupComponent } from './setup/setup.component';
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
+        ClipboardModule,
     ],
     bootstrap: [AppComponent]
 })

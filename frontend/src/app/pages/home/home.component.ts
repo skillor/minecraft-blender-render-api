@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { MinecraftBlenderRenderService } from 'src/app/shared/minecraft-blender-render/minecraft-blender-render.service';
 import { Transfer } from 'src/app/shared/minecraft-blender-render/transfer';
 import { SettingsService } from 'src/app/shared/settings/settings.service';
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
     errorMessage: string = '';
 
     constructor(
+        private router: Router,
         private minecraftBlenderRenderService: MinecraftBlenderRenderService,
         public settingsService: SettingsService,
         private storageService: StorageService,
@@ -44,6 +46,12 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+
+        if (!this.minecraftBlenderRenderService.isValidEndpoint()) {
+            this.router.navigate(['']);
+            return;
+        }
+
         this.renderForm.valueChanges.subscribe(() => {
             this.storageService.save('mcrape_replaceAlexSkins', this.renderForm.get('replaceAlexSkins')?.value);
             this.storageService.save('mcrape_replaceSteveSkins', this.renderForm.get('replaceSteveSkins')?.value);

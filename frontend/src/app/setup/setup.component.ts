@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { MinecraftBlenderRenderService } from '../shared/minecraft-blender-render/minecraft-blender-render.service';
 
 @Component({
     selector: 'app-setup',
@@ -8,13 +9,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class SetupComponent implements OnInit {
 
+    error: string = '';
+
     constructor(
         private router: Router,
-        private route: ActivatedRoute,
+        private minecraftBlenderRenderService: MinecraftBlenderRenderService,
     ) { }
 
     ngOnInit(): void {
-        this.router.navigate(['home']);
+        this.minecraftBlenderRenderService.checkEndpoint().subscribe(
+            (success) => {
+                this.router.navigate(['home']);
+            },
+            (error) => {
+                this.error = 'Api Endpoint is not valid!';
+            },
+            () => {},
+        );
     }
 
 }

@@ -1,1 +1,7 @@
-<div class="btn loading">Loading...</div>
+<div class="hero min-h-screen">
+    <div *ngIf="error" class="alert alert-error shadow-lg flex-col">
+        <span>{{error}}</span>
+        <a routerLink="/settings" class="btn btn-secondary">Settings</a>
+    </div>
+    <div *ngIf="!error" class="btn loading">Loading...</div>
+</div>

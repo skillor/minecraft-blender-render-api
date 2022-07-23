@@ -79,6 +79,7 @@
                 <div class="collapse-content !p-0">
                     <button type="button" class="btn btn-secondary w-full" (click)="loadRenderSettings()" [disabled]="renderForm.invalid">Load Render Settings from blend file</button>
                     <div *ngIf="loadedRenderSettings" class="mockup-code">
+                        <button class="btn btn-secondary w-full" ngxClipboard [cbContent]="loadedRenderSettings">Copy</button>
                         <pre><code>{{loadedRenderSettings | json}}</code></pre>
                     </div>
                 </div>
