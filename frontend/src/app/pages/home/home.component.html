@@ -38,8 +38,8 @@
                 <button *ngIf="!transferState" type="submit" class="btn btn-primary w-full"
                     [disabled]="renderForm.invalid">Render</button>
 
-                <div *ngIf="transferState" class="flex flex-row justify-center items-center">
-                    <div class="radial-progress" [style.--value]="transferState.progress * 100 | number:'1.0-0'">
+                <div *ngIf="transferState" class="flex flex-row flex-wrap justify-center items-center gap-2">
+                    <div class="radial-progress" [style.--value]="transferState.progress * 100 | number:'1.0-0'" style="--size:3rem;--thickness:5px;">
                         {{ transferState.progress * 100 | number:'1.0-0' }}%</div>
                     <div [ngSwitch]="transferState.state">
                         <span *ngSwitchCase="'UPLOAD_PROGRESS'">Uploading...</span>
