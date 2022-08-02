@@ -14,6 +14,12 @@ export class SettingsService {
         // default settings
         const settings: Setting[] = [
             {
+                key: 'gzip_scene_file',
+                type: 'checkbox',
+                title: 'Gzip Blender Scene File',
+                value: true,
+            },
+            {
                 key: 'minecraft_blender_render_api_url',
                 type: 'text',
                 title: 'Minecraft Blender Render Api Url',
