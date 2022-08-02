@@ -110,7 +110,7 @@ export class MinecraftBlenderRenderService {
             switchMap(
                 (data) => {
                     formData.append('scene_file', new Blob([data], {type: 'application/octet-stream'} ));
-                    return this.postRenderSkinAuto(formData);
+                    return this.postGetRenderSettings(formData);
                 }
             ),
         );
