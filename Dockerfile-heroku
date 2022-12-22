@@ -1,4 +1,4 @@
-FROM nytimes/blender:latest
+FROM nytimes/blender3.2-cpu-ubuntu18.04
 
 WORKDIR /code
 
